@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
+
 import '../../providers/gasto.dart';
 
 import '../../providers/gastos_provider.dart';
@@ -50,7 +50,6 @@ class _GastosFormState extends State<GastosForm> {
     });
   }
 
-  @override
   final _formGKey = GlobalKey<FormState>();
 
 //FOCUS NODES

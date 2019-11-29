@@ -67,8 +67,8 @@ class _ActiveInmueblesState extends State<ActiveInmuebles> {
                   Expanded(
                     child: TextField(
                       controller: controller,
-                      onEditingComplete: () => {
-                        FocusScope.of(context).requestFocus(FocusNode()),
+                      onEditingComplete: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
                       },
                       decoration: InputDecoration(
                         icon: Icon(Icons.search),

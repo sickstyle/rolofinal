@@ -1,4 +1,3 @@
-import 'dart:io';
 import './image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;

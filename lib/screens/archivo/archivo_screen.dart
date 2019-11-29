@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../screens/archivo/archivo_form.dart';
 import 'package:provider/provider.dart';
 import '../../providers/images_provider.dart';
-import 'package:provider/provider.dart';
+
 import 'dart:io';
 
 class ArchivoScreen extends StatefulWidget {

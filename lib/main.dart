@@ -17,7 +17,7 @@ import 'screens/inmueble/soft_deleted_inmuebles.dart';
 import 'screens/inquilino/inquilino_floor.dart';
 import 'screens/inquilino/soft_deleted_inquilinos.dart';
 import 'screens/inquilino/inquilinos_form.dart';
-import 'screens/inquilino/inquilino_details.dart';
+
 import 'screens/gastos/gastos_screen.dart';
 import 'screens/gastos/soft_deteled_gastos.dart';
 

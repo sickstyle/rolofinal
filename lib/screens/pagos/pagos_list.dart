@@ -70,7 +70,6 @@ class _PagosListState extends State<PagosList> {
         : pagos
             .where((p) => p.descripcion.toLowerCase().contains(filter))
             .toList();
-    ;
 
     return _isLoading
         ? Center(
@@ -84,8 +83,8 @@ class _PagosListState extends State<PagosList> {
                   Expanded(
                     child: TextField(
                       controller: controller,
-                      onEditingComplete: () => {
-                        FocusScope.of(context).requestFocus(FocusNode()),
+                      onEditingComplete: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
                       },
                       decoration: InputDecoration(
                         icon: Icon(Icons.search),

@@ -5,8 +5,6 @@ import 'package:intl/intl.dart';
 import '../../providers/inquilino.dart';
 import '../../providers/inquilinos_provider.dart';
 
-import '../../screens/inquilino/inquilino_floor.dart';
-
 class InquilinoForm extends StatefulWidget {
   static const routeName = '/InquilinoForm';
   @override

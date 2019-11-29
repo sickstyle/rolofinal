@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/provider.dart' as prefix0;
 
 import '../../providers/gastos_provider.dart';
 import '../../providers/payments_provider.dart';
