@@ -99,7 +99,6 @@ class _MyAppState extends State<MyApp> {
         )
       ],
       child: MaterialApp(
-        locale: Locale('es_Es'),
         debugShowCheckedModeBanner: false,
         title: 'ROLO',
         routes: {
