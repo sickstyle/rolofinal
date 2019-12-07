@@ -1,13 +1,6 @@
-import 'dart:io';
-
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart' as path;
-import 'package:path_provider/path_provider.dart' as syspaths;
-import '../../providers/image.dart';
-
-import '../../providers/images_provider.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/services.dart';
 
 class ArchivoForm extends StatefulWidget {
   static const routeName = '/archivo-form';
@@ -16,123 +9,56 @@ class ArchivoForm extends StatefulWidget {
 }
 
 class _ArchivoFormState extends State<ArchivoForm> {
-  TextEditingController _descripcionController = TextEditingController();
+  String _fileName;
+  String _path;
+  String _extension;
 
-  File _storedImage;
-  File _savedImage;
+  FileType _pickingType;
 
-  var _editedImage = Foto(
-    id: '',
-    title: '',
-    image: null,
-    floorId: '',
-    inquilinoId: null,
-  );
-
-  Future<void> _takePicture() async {
-    final imageFile = await ImagePicker.pickImage(
-      source: ImageSource.camera,
-      maxWidth: 600,
-    );
-
-    setState(() {
-      _storedImage = imageFile;
-    });
-
-    if (imageFile == null) {
-      return;
+  void _openFileExplorer() async {
+    try {
+      _path = await FilePicker.getFilePath(
+          type: _pickingType, fileExtension: _extension);
+    } on PlatformException catch (e) {
+      print("Unsupported operation" + e.toString());
     }
-
-    final appDir = await syspaths.getApplicationDocumentsDirectory();
-
-    final fileName = path.basename(imageFile.path);
-
-    _savedImage = await imageFile.copy('${appDir.path}/$fileName');
-
-    _editedImage.title = _descripcionController.text;
-    _editedImage.image = _savedImage.path;
-    _editedImage.floorId = '-Lu2DncSeEWezQ8E-EdD';
-  }
-
-  void _saveImage() {
-    Provider.of<FotosProvider>(context, listen: false)
-        .addFotoFloor(_editedImage);
-
-    Navigator.of(context).pop();
+    if (!mounted) return;
+    setState(() {
+      _fileName = _path != null ? _path.split('/').last : "";
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Cargar de archivo'),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: <Widget>[
-                    TextField(
-                      controller: _descripcionController,
-                      decoration: InputDecoration(labelText: 'Descripcion'),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Container(
-                          width: 150,
-                          height: 120,
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 1, color: Colors.grey),
-                          ),
-                          child: _storedImage != null
-                              ? Image.file(
-                                  _storedImage,
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                )
-                              : Text(
-                                  'Seleccionar Imagen',
-                                  textAlign: TextAlign.center,
-                                ),
-                          alignment: Alignment.center,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: FlatButton.icon(
-                            icon: Icon(Icons.camera),
-                            textColor: Theme.of(context).primaryColor,
-                            label: Text('Tomar Foto'),
-                            onPressed: _takePicture,
-                          ),
-                        )
-                      ],
+        appBar: AppBar(
+          title: Text("Subir Archivo"),
+        ),
+        body: Center(
+          child: Column(
+            // horizontal).
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _fileName != null
+                  ? Text(
+                      _path,
+                      textAlign: TextAlign.center,
                     )
-                  ],
-                ),
-              ),
-            ),
+                  : Text("Cargar un Archivo"),
+            ],
           ),
-          RaisedButton.icon(
-            color: Colors.teal.shade400,
-            elevation: 0,
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            icon: Icon(Icons.add),
-            label: Text(
-              'Cargar',
-            ),
-            onPressed: _saveImage,
-          )
-        ],
-      ),
-    );
+        ),
+        floatingActionButton: _path == null
+            ? FloatingActionButton(
+                onPressed: _openFileExplorer,
+                tooltip: 'Seleccionar',
+                child: Icon(Icons.add),
+              )
+            : FloatingActionButton(
+                onPressed: _openFileExplorer,
+                tooltip: 'Guardar',
+                child: Icon(Icons
+                    .save), // This trailing comma makes auto-formatting nicer for build methods.
+              ));
   }
 }
