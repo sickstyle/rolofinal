@@ -58,13 +58,11 @@ class Gastos with ChangeNotifier {
     var total = 0.0;
 
     _items
-        .where(
-          (g) =>
-              g.isDeleted == false &&
-              g.floorId == floorId &&
-              DateTime.parse(g.fecha).month == mes &&
-              DateTime.parse(g.fecha).year == DateTime(int.parse(year)).year,
-        )
+        .where((g) =>
+            g.isDeleted == false &&
+            g.floorId == floorId &&
+            DateTime.parse(g.fecha).month == mes &&
+            DateTime.parse(g.fecha).year == DateTime(int.parse(year)).year)
         .forEach((x) => total += x.monto);
 
     return total;
