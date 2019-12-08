@@ -49,13 +49,30 @@ class _MbTeoricoState extends State<MbTeorico> {
     final pagosData = Provider.of<Pagos>(context);
 
     final selectedYear = Provider.of<Config>(context).fecha;
+    final valorReal = floorData.valorReal(floorId);
+
+    // double totalMes(id, year, mes) {
+    //   var total = 0.0;
+
+    //   var gastos = gastosData.items
+    //       .where((g) =>
+    //           g.isDeleted == false &&
+    //           g.floorId == floorId &&
+    //           DateTime.parse(g.fecha).month == mes &&
+    //           DateTime.parse(g.fecha).year == DateTime(int.parse(year)).year)
+    //       .forEach((x) => !gastosData.items
+    //               .any((i) => i.id != x.id && i.descripcion == x.descripcion)
+    //           ? total += x.monto
+    //           : total -= x.monto);
+
+    //   return total;
+    // }
 
     final gastosFijos = gastosData.gastosFijos(floorId, selectedYear);
     final pagosFijos = pagosData.pagosFijos(floorId, selectedYear);
 
     final gastosMes = gastosData.gastosMeses(floorId, selectedYear);
     final pagosMes = pagosData.pagosMeses(floorId, selectedYear);
-    final valorReal = floorData.valorReal(floorId);
 
     var totalGastos = 0.0;
     var totalPagos = 0.0;

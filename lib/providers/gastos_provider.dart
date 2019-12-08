@@ -68,6 +68,52 @@ class Gastos with ChangeNotifier {
     return total;
   }
 
+  bool verify(Gasto gasto) {
+    var result = _items.firstWhere(
+        (i) => i.id != gasto.id && i.descripcion == gasto.descripcion);
+
+    if (result != null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  double gastosMensualesMbt(floorId, year, mes) {
+    var total = 0.0;
+
+    var gastos = _items.where((g) => verify(g)).toList();
+
+    gastos
+        .where((g) =>
+            g.isDeleted == false &&
+            g.floorId == floorId &&
+            DateTime.parse(g.fecha).month == mes &&
+            DateTime.parse(g.fecha).year == DateTime(int.parse(year)).year)
+        .forEach((x) => total += x.monto);
+
+    return total;
+  }
+
+  Map<String, double> gastosMesesMbt(floorId, year) {
+    var meses = {
+      'enero': gastosMensualesMbt(floorId, year, 1),
+      'febrero': gastosMensualesMbt(floorId, year, 2),
+      'marzo': gastosMensualesMbt(floorId, year, 3),
+      'abril': gastosMensualesMbt(floorId, year, 4),
+      'mayo': gastosMensualesMbt(floorId, year, 5),
+      'junio': gastosMensualesMbt(floorId, year, 6),
+      'julio': gastosMensualesMbt(floorId, year, 7),
+      'agosto': gastosMensualesMbt(floorId, year, 8),
+      'septiembre': gastosMensualesMbt(floorId, year, 9),
+      'octubre': gastosMensualesMbt(floorId, year, 10),
+      'noviembre': gastosMensualesMbt(floorId, year, 11),
+      'diciembre': gastosMensualesMbt(floorId, year, 12),
+    };
+
+    return meses;
+  }
+
   Map<String, double> gastosMeses(floorId, year) {
     var meses = {
       'enero': gastosMensuales(floorId, year, 1),
