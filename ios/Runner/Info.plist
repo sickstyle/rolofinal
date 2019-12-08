@@ -26,6 +26,8 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Permiso para usar la galeria!</key>
 	<key>UIBackgroundModes</key>
 	<array>
         <string>fetch</string>
