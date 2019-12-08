@@ -19,7 +19,6 @@ class _ArchivoFormState extends State<ArchivoForm> {
   String _fileName;
   File _file;
   String _extension;
-  FileType _pickingType;
 
   var _isLoading = false;
   var _isInit = true;
@@ -73,7 +72,7 @@ class _ArchivoFormState extends State<ArchivoForm> {
   void _openFileExplorer() async {
     try {
       _file = await FilePicker.getFile(
-          type: _pickingType, fileExtension: _extension);
+          type: FileType.ANY, fileExtension: _extension);
     } on PlatformException catch (e) {
       print("Unsupported operation" + e.toString());
     }
