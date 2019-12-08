@@ -89,11 +89,6 @@ class _MbTeoricoState extends State<MbTeorico> {
       }
     });
 
-    var totalAlquiler = (totalPagos - pagosFijos) + pagosFijos * 12;
-    var totalGas = (totalGastos - gastosFijos) + gastosFijos * 12;
-    var bai = totalAlquiler - totalGas;
-    var bai2 = bai * 100 / valorReal;
-
     gastosMes.forEach((key, value) {
       if (value == 0) {
         gastosMes[key] = gastosFijos;
@@ -105,6 +100,11 @@ class _MbTeoricoState extends State<MbTeorico> {
         pagosMes[key] = pagosFijos;
       }
     });
+
+    var totalAlquiler = (totalPagos - pagosFijos) + pagosFijos * 12;
+    var totalGas = (totalGastos - gastosFijos) + gastosFijos * 12;
+    var bai = totalAlquiler - totalGas;
+    var bai2 = bai * 100 / valorReal;
 
     return Scaffold(
       appBar: AppBar(
