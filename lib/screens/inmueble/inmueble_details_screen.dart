@@ -139,8 +139,8 @@ class _InmuebleDetailsState extends State<InmuebleDetails> {
               child: ListTile(
                 title: Text('Archivo'),
                 onTap: () {
-                  Navigator.of(context)
-                      .pushNamed(ArchivoScreen.routeName, arguments: floorId);
+                  Navigator.of(context).pushNamed(ArchivoScreen.routeName,
+                      arguments: "$floorId,null");
                 },
               ),
             ),

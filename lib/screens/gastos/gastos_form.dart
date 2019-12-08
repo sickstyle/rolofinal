@@ -81,6 +81,7 @@ class _GastosFormState extends State<GastosForm> {
 
       _editedGasto.floorId = floorId;
     }
+    _isInit = false;
     super.didChangeDependencies();
   }
 

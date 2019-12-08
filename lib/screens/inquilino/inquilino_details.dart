@@ -5,7 +5,7 @@ import '../../providers/inquilinos_provider.dart';
 
 import '../../screens/inquilino/inquilino_info.dart';
 
-import '../../screens/inquilino/inquilino_floor.dart';
+import '../../screens/archivo/archivo_screen.dart';
 
 import '../../screens/welcome_screen.dart';
 
@@ -66,7 +66,8 @@ class _InquilinoDetailsState extends State<InquilinoDetails> {
               child: ListTile(
                 title: Text('Archivo'),
                 onTap: () {
-                  Navigator.of(context).pushNamed(InquilinoFloor.routeName);
+                  Navigator.of(context).pushNamed(ArchivoScreen.routeName,
+                      arguments: "null,$inquilinoId");
                 },
               ),
             ),

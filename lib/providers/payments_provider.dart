@@ -126,4 +126,20 @@ class Pagos with ChangeNotifier {
 
     return meses;
   }
+
+  double pagosFijos(floorId, year) {
+    var total = 0.0;
+
+    _items
+        .where(
+          (g) =>
+              g.isFixed == true &&
+              g.isDeleted == false &&
+              g.floorId == floorId &&
+              DateTime.parse(g.fecha).year == DateTime(int.parse(year)).year,
+        )
+        .forEach((x) => total += x.monto);
+
+    return total;
+  }
 }

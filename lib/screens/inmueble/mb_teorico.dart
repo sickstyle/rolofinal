@@ -51,6 +51,7 @@ class _MbTeoricoState extends State<MbTeorico> {
     final selectedYear = Provider.of<Config>(context).fecha;
 
     final gastosFijos = gastosData.gastosFijos(floorId, selectedYear);
+    final pagosFijos = pagosData.pagosFijos(floorId, selectedYear);
 
     final gastosMes = gastosData.gastosMeses(floorId, selectedYear);
     final pagosMes = pagosData.pagosMeses(floorId, selectedYear);
@@ -88,7 +89,7 @@ class _MbTeoricoState extends State<MbTeorico> {
       }
     });
 
-    var totalAlquiler = totalPagos * 12;
+    var totalAlquiler = (totalPagos - pagosFijos) + pagosFijos * 12;
     var totalGas = (totalGastos - gastosFijos) + gastosFijos * 12;
     var bai = totalAlquiler - totalGas;
     var bai2 = bai * 100 / valorReal;
@@ -101,7 +102,7 @@ class _MbTeoricoState extends State<MbTeorico> {
 
     pagosMes.forEach((key, value) {
       if (value == 0) {
-        pagosMes[key] = totalPagos;
+        pagosMes[key] = pagosFijos;
       }
     });
 

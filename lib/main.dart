@@ -53,7 +53,7 @@ import 'screens/auth-screen.dart';
 
 import 'providers/auth.dart';
 import 'screens/archivo/archivo_screen.dart';
-import 'providers/images_provider.dart';
+import 'providers/archivos_provider.dart';
 
 void main() {
   SystemChrome.setPreferredOrientations([
@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> {
           value: Config(),
         ),
         ChangeNotifierProvider.value(
-          value: FotosProvider(),
+          value: Archivos(),
         )
       ],
       child: MaterialApp(

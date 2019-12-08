@@ -1,17 +1,19 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class Foto with ChangeNotifier {
+class Archivo with ChangeNotifier {
   String id;
+  String idarchivo;
   String title;
-  String image;
+  String type;
   String floorId;
   String inquilinoId;
 
-  Foto({
+  Archivo({
     @required this.id,
+    @required this.idarchivo,
     @required this.title,
-    @required this.image,
+    @required this.type,
     @required this.floorId,
     @required this.inquilinoId,
   });
