@@ -17,7 +17,7 @@ class ArchivoForm extends StatefulWidget {
 
 class _ArchivoFormState extends State<ArchivoForm> {
   String _fileName;
-  File _file;
+  String _file;
   String _extension;
 
   var _isLoading = false;
@@ -53,33 +53,33 @@ class _ArchivoFormState extends State<ArchivoForm> {
 
   var drive = GoogleDrive();
 
-  void _upload() {
-    setState(() {
-      _isLoading = true;
-    });
+  // void _upload() {
+  //   setState(() {
+  //     _isLoading = true;
+  //   });
 
-    drive.upload(_file).then((res) {
-      _archivo.idarchivo = res['id'];
-      _archivo.title = res['name'];
-      _archivo.type = res['mimeType'];
+  //   drive.upload(_file).then((res) {
+  //     _archivo.idarchivo = res['id'];
+  //     _archivo.title = res['name'];
+  //     _archivo.type = res['mimeType'];
 
-      Provider.of<Archivos>(context).addArchivo(_archivo);
+  //     Provider.of<Archivos>(context).addArchivo(_archivo);
 
-      Navigator.of(context).pop();
-    });
-  }
+  //     Navigator.of(context).pop();
+  //   });
+  // }
 
   void _openFileExplorer() async {
     try {
-      _file = await FilePicker.getFile(
+      _file = await FilePicker.getFilePath(
           type: FileType.ANY, fileExtension: _extension);
     } on PlatformException catch (e) {
       print("Unsupported operation" + e.toString());
     }
     if (!mounted) return;
     setState(() {
-      _fileName =
-          _file != null ? p.basename(_file.absolute.path).split('/').last : "";
+      // _fileName =
+      //     // _file != null ? p.basename(_file.absolute.path).split('/').last : "";
     });
   }
 
@@ -91,7 +91,7 @@ class _ArchivoFormState extends State<ArchivoForm> {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.save),
-              onPressed: _upload,
+              onPressed: () {},
             ),
           ],
         ),
