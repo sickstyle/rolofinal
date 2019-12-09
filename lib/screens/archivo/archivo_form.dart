@@ -18,8 +18,10 @@ class ArchivoForm extends StatefulWidget {
 class _ArchivoFormState extends State<ArchivoForm> {
   String _fileName;
   File _file;
+  FileType _pickingType;
   String _extension;
-
+  TextEditingController _controller = new TextEditingController();
+  bool _hasValidMime = false;
   var _isLoading = false;
   var _isInit = true;
 
@@ -31,6 +33,11 @@ class _ArchivoFormState extends State<ArchivoForm> {
     title: '',
     type: '',
   );
+
+  void initState() {
+    super.initState();
+    _controller.addListener(() => _extension = _controller.text);
+  }
 
   @override
   void didChangeDependencies() {
@@ -72,7 +79,7 @@ class _ArchivoFormState extends State<ArchivoForm> {
   void _openFileExplorer() async {
     try {
       _file = await FilePicker.getFile(
-          type: FileType.IMAGE, fileExtension: _extension);
+          type: _pickingType, fileExtension: _extension);
     } on PlatformException catch (e) {
       print("Unsupported operation" + e.toString());
     }
@@ -102,12 +109,65 @@ class _ArchivoFormState extends State<ArchivoForm> {
                   // horizontal).
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    _fileName != null
-                        ? Text(
-                            _fileName,
-                            textAlign: TextAlign.center,
-                          )
-                        : Text("Cargar un Archivo"),
+                    new Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: new DropdownButton(
+                        hint: new Text('Cargar Desde'),
+                        value: _pickingType,
+                        items: <DropdownMenuItem>[
+                          new DropdownMenuItem(
+                            child: new Text('AUDIO'),
+                            value: FileType.AUDIO,
+                          ),
+                          new DropdownMenuItem(
+                            child: new Text('IMAGEN'),
+                            value: FileType.IMAGE,
+                          ),
+                          new DropdownMenuItem(
+                            child: new Text('VIDEO'),
+                            value: FileType.VIDEO,
+                          ),
+                          new DropdownMenuItem(
+                            child: new Text('CUALQUIERA'),
+                            value: FileType.ANY,
+                          ),
+                          new DropdownMenuItem(
+                            child: new Text('PERSONALIZADO'),
+                            value: FileType.CUSTOM,
+                          ),
+                        ],
+                        onChanged: (value) => setState(() {
+                          _pickingType = value;
+                          if (_pickingType != FileType.CUSTOM) {
+                            _controller.text = _extension = '';
+                          }
+                        }),
+                      ),
+                    ),
+                    new ConstrainedBox(
+                      constraints: BoxConstraints.tightFor(width: 100.0),
+                      child: _pickingType == FileType.CUSTOM
+                          ? new TextFormField(
+                              maxLength: 15,
+                              autovalidate: true,
+                              controller: _controller,
+                              decoration: InputDecoration(
+                                  labelText: 'Extension del archivo'),
+                              keyboardType: TextInputType.text,
+                              textCapitalization: TextCapitalization.none,
+                              validator: (value) {
+                                RegExp reg = new RegExp(r'[^a-zA-Z0-9]');
+                                if (reg.hasMatch(value)) {
+                                  _hasValidMime = false;
+                                  return 'Formato invalido';
+                                }
+                                _hasValidMime = true;
+                                return null;
+                              },
+                            )
+                          : new Container(),
+                    ),
+                    _fileName != null ? Text(_fileName) : Container(),
                   ],
                 ),
         ),

@@ -69,10 +69,10 @@ class _MbTeoricoState extends State<MbTeorico> {
     // }
 
     final gastosFijos = gastosData.gastosFijos(floorId, selectedYear);
-    final pagosFijos = pagosData.pagosFijos(floorId, selectedYear);
 
     final gastosMes = gastosData.gastosMeses(floorId, selectedYear);
     final pagosMes = pagosData.pagosMeses(floorId, selectedYear);
+    final pagosFijos = pagosData.pagosFijos(floorId, selectedYear);
 
     var totalGastos = 0.0;
     var totalPagos = 0.0;
@@ -114,7 +114,7 @@ class _MbTeoricoState extends State<MbTeorico> {
 
     pagosMes.forEach((key, value) {
       if (value == 0) {
-        pagosMes[key] = pagosFijos;
+        pagosMes[key] = totalPagos;
       }
     });
 
