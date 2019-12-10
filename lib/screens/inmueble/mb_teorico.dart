@@ -51,26 +51,9 @@ class _MbTeoricoState extends State<MbTeorico> {
     final selectedYear = Provider.of<Config>(context).fecha;
     final valorReal = floorData.valorReal(floorId);
 
-    // double totalMes(id, year, mes) {
-    //   var total = 0.0;
-
-    //   var gastos = gastosData.items
-    //       .where((g) =>
-    //           g.isDeleted == false &&
-    //           g.floorId == floorId &&
-    //           DateTime.parse(g.fecha).month == mes &&
-    //           DateTime.parse(g.fecha).year == DateTime(int.parse(year)).year)
-    //       .forEach((x) => !gastosData.items
-    //               .any((i) => i.id != x.id && i.descripcion == x.descripcion)
-    //           ? total += x.monto
-    //           : total -= x.monto);
-
-    //   return total;
-    // }
-
     final gastosFijos = gastosData.gastosFijos(floorId, selectedYear);
 
-    final gastosMes = gastosData.gastosMeses(floorId, selectedYear);
+    final gastosMes = gastosData.gastosMesesMbt(floorId, selectedYear);
     final pagosMes = pagosData.pagosMeses(floorId, selectedYear);
     final pagosFijos = pagosData.pagosFijos(floorId, selectedYear);
 
@@ -86,6 +69,8 @@ class _MbTeoricoState extends State<MbTeorico> {
     });
 
     var contador = 12;
+
+    var contador2 = 0;
 
     var meses = [
       'enero',
@@ -109,17 +94,20 @@ class _MbTeoricoState extends State<MbTeorico> {
     gastosMes.forEach((key, value) {
       if (value == 0) {
         gastosMes[key] = gastosFijos;
+      } else {
+        gastosMes[key] += gastosFijos;
       }
     });
 
     pagosMes.forEach((key, value) {
       if (value == 0) {
-        pagosMes[key] = totalPagos;
+        pagosMes[key] = pagosFijos;
+        contador2++;
       }
     });
 
-    var totalAlquiler = (totalPagos - pagosFijos) + pagosFijos * 12;
-    var totalGas = (totalGastos - gastosFijos) + gastosFijos * 12;
+    var totalAlquiler = totalPagos + pagosFijos * contador2;
+    var totalGas = totalGastos + gastosFijos * 12;
     var bai = totalAlquiler - totalGas;
     var bai2 = bai * 100 / valorReal;
 
