@@ -112,8 +112,10 @@ class InquilinoInfo extends StatelessWidget {
           ),
           ListTile(
             leading: Text('TGSS'),
-            trailing: Text(DateFormat.yMMMMd()
-                .format(DateTime.parse(loadedInquilino.tgss))),
+            trailing: loadedInquilino.tgss != null
+                ? Text(DateFormat.yMMMMd()
+                    .format(DateTime.parse(loadedInquilino.tgss)))
+                : "",
           ),
           ListTile(
             leading: Text('Observaciones'),
