@@ -79,7 +79,8 @@ class _ArchivoFormState extends State<ArchivoForm> {
   void _openFileExplorer() async {
     try {
       _file = await FilePicker.getFile(
-          type: _pickingType, fileExtension: _extension);
+        type: _pickingType,
+      );
     } on PlatformException catch (e) {
       print("Unsupported operation" + e.toString());
     }
@@ -117,28 +118,28 @@ class _ArchivoFormState extends State<ArchivoForm> {
                         items: <DropdownMenuItem>[
                           new DropdownMenuItem(
                             child: new Text('AUDIO'),
-                            value: FileType.AUDIO,
+                            value: FileType.audio,
                           ),
                           new DropdownMenuItem(
                             child: new Text('IMAGEN'),
-                            value: FileType.IMAGE,
+                            value: FileType.image,
                           ),
                           new DropdownMenuItem(
                             child: new Text('VIDEO'),
-                            value: FileType.VIDEO,
+                            value: FileType.video,
                           ),
                           new DropdownMenuItem(
                             child: new Text('CUALQUIERA'),
-                            value: FileType.ANY,
+                            value: FileType.any,
                           ),
                           new DropdownMenuItem(
                             child: new Text('PERSONALIZADO'),
-                            value: FileType.CUSTOM,
+                            value: FileType.custom,
                           ),
                         ],
                         onChanged: (value) => setState(() {
                           _pickingType = value;
-                          if (_pickingType != FileType.CUSTOM) {
+                          if (_pickingType != FileType.custom) {
                             _controller.text = _extension = '';
                           }
                         }),
@@ -146,7 +147,7 @@ class _ArchivoFormState extends State<ArchivoForm> {
                     ),
                     new ConstrainedBox(
                       constraints: BoxConstraints.tightFor(width: 100.0),
-                      child: _pickingType == FileType.CUSTOM
+                      child: _pickingType == FileType.custom
                           ? new TextFormField(
                               maxLength: 15,
                               autovalidate: true,
